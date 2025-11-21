@@ -18,9 +18,13 @@
             font-family: "Inter", sans-serif;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             color: white;
-            overflow-x: hidden;
             background: #0a060a;
             position: relative;
         }
@@ -41,12 +45,6 @@
 
         .bg1 {
             background-image: linear-gradient(220deg, #0d0d0d, #150815, #0d0d0d);
-        }
-
-        .bg2 {
-            background-image: url('https://i.ibb.co/LSqVVsn/noise.png');
-            opacity: 0.14;
-            mix-blend-mode: overlay;
         }
 
         .particle {
@@ -102,17 +100,9 @@
         }
 
         @keyframes logoFadePingpong {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .nav-links {
@@ -150,7 +140,7 @@
         }
 
         .hero {
-            padding-top: 200px;
+            padding-top: 150px;
             padding-bottom: 160px;
             text-align: center;
         }
@@ -173,21 +163,10 @@
             text-align: center;
         }
 
-        .release-countdown h2 {
-            font-size: 32px;
-            color: #ff9bdc;
-            font-weight: 800;
-            margin-bottom: 18px;
-        }
-
         .countdown-box {
             display: flex;
             justify-content: center;
             gap: 35px;
-        }
-
-        .countdown-box div {
-            text-align: center;
         }
 
         .countdown-box span {
@@ -199,11 +178,15 @@
         }
 
         .countdown-box label {
-            font-size: 14px;
             color: #d1d1d1;
             margin-top: 4px;
             display: block;
             font-weight: 600;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .btn-row {
@@ -231,23 +214,12 @@
 
         a.btn {
             text-decoration: none;
+            color: inherit;
         }
 
         .btn:hover {
             border-color: #ff5ac8;
             transform: translateY(-3px);
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 
@@ -256,15 +228,14 @@
 <body>
 
     <div class="bg-layer bg1"></div>
-    <div class="bg-layer bg2"></div>
 
     <script>
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 20; i++) {
             let p = document.createElement("div");
             p.className = "particle";
             p.style.left = Math.random() * 100 + "vw";
             p.style.top = (Math.random() * 120 + 120) + "vh";
-            p.style.animationDuration = (10 + Math.random() * 10) + "s";
+            p.style.animationDuration = (8 + Math.random() * 10) + "s";
             document.body.appendChild(p);
         }
     </script>
@@ -285,24 +256,11 @@
         <p>The Official Release Countdown</p>
 
         <div class="release-countdown">
-            <h2>Releasing In</h2>
             <div class="countdown-box">
-                <div>
-                    <span id="days">00</span>
-                    <label>Days</label>
-                </div>
-                <div>
-                    <span id="hours">00</span>
-                    <label>Hours</label>
-                </div>
-                <div>
-                    <span id="mins">00</span>
-                    <label>Minutes</label>
-                </div>
-                <div>
-                    <span id="secs">00</span>
-                    <label>Seconds</label>
-                </div>
+                <div><span id="days">00</span><label>Days</label></div>
+                <div><span id="hours">00</span><label>Hours</label></div>
+                <div><span id="mins">00</span><label>Minutes</label></div>
+                <div><span id="secs">00</span><label>Seconds</label></div>
             </div>
         </div>
 
@@ -314,46 +272,25 @@
     </section>
 
     <script>
-        const layer1 = document.querySelector(".bg1");
-        const layer2 = document.querySelector(".bg2");
-
-        document.addEventListener("mousemove", e => {
-            let x = (e.clientX / window.innerWidth - 0.5) * 20;
-            let y = (e.clientY / window.innerHeight - 0.5) * 20;
-
-            layer1.style.transform = `translate(${x}px,${y}px)`;
-            layer2.style.transform = `translate(${x / 2}px,${y / 2}px)`;
-        });
-    </script>
-
-    <!-- COPY IP -->
-    <script>
         const copyBtn = document.getElementById("copy-ip-btn");
         const serverIP = "play.astryxn.xyz";
 
         copyBtn.addEventListener("click", () => {
             navigator.clipboard.writeText(serverIP);
-
             copyBtn.textContent = "Copied!";
-            copyBtn.style.borderColor = "#ff5ac8";
-
-            setTimeout(() => {
-                copyBtn.textContent = "Copy IP";
-                copyBtn.style.borderColor = "rgba(255,255,255,0.12)";
-            }, 1200);
+            setTimeout(() => copyBtn.textContent = "Copy IP", 1000);
         });
     </script>
 
     <script>
-        const releaseDate = new Date("March 20, 2025 15:00:00").getTime();
+        const releaseDate = new Date("November 21, 2025 15:00:00").getTime();
 
         function updateCountdown() {
             const now = Date.now();
             const diff = releaseDate - now;
 
             if (diff <= 0) {
-                document.querySelector(".release-countdown h2").textContent = "Astryx Is Now LIVE!";
-                document.querySelector(".countdown-box").style.display = "none";
+                document.querySelector(".hero p").textContent = "Astryx is NOW LIVE!";
                 return;
             }
 
@@ -370,10 +307,14 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
     </script>
+
+</body>
+
+</html>
 
 </body>
 
 
 </html>
+
