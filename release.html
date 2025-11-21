@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Astryx Network - Release Countdown" />
+    <meta property="og:description"
+        content="Count the time to Astryx Network's exciting release! Stay tuned for updates and be ready to join the fun." />
+    <meta property="og:url" content="https://astryxnetwork.xyz" />
+    <meta name="theme-color" content="#ff5ac8" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            color: white;
+            overflow-x: hidden;
+            background: #0a060a;
+            position: relative;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: -3;
+            pointer-events: none;
+            opacity: 0.38;
+            transition: transform 0.1s linear;
+        }
+
+        .bg1 {
+            background-image: linear-gradient(220deg, #0d0d0d, #150815, #0d0d0d);
+        }
+
+        .bg2 {
+            background-image: url('https://i.ibb.co/LSqVVsn/noise.png');
+            opacity: 0.14;
+            mix-blend-mode: overlay;
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ff5ac8;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 12s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-200vh) translateX(40vw);
+            }
+        }
+
+        .nav {
+            width: 100%;
+            height: 60px;
+            padding: 0 55px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: .5px;
+
+            background: linear-gradient(90deg, #ff5ac8, #ff9bdc, #ffffff, #ff9bdc, #ff5ac8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-size: 300% 300%;
+            animation: logoFadePingpong 6s ease-in-out infinite;
+        }
+
+        @keyframes logoFadePingpong {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            position: relative;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 17px;
+            transition: 0.25s ease;
+        }
+
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: #ff5ac8;
+            border-radius: 10px;
+            transition: width 0.25s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            color: #ff9bdc;
+        }
+
+        .hero {
+            padding-top: 200px;
+            padding-bottom: 160px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 900;
+            color: #ff5ac8;
+            animation: fadeUp 1s ease;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 22px;
+            color: #d1d1d1;
+        }
+
+        .release-countdown {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .release-countdown h2 {
+            font-size: 32px;
+            color: #ff9bdc;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .countdown-box {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .countdown-box div {
+            text-align: center;
+        }
+
+        .countdown-box span {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff5ac8;
+            display: block;
+            min-width: 80px;
+        }
+
+        .countdown-box label {
+            font-size: 14px;
+            color: #d1d1d1;
+            margin-top: 4px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .btn-row {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .25s;
+            color: #ffffff;
+        }
+
+        a.btn {
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            border-color: #ff5ac8;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-layer bg1"></div>
+    <div class="bg-layer bg2"></div>
+
+    <script>
+        for (let i = 0; i < 25; i++) {
+            let p = document.createElement("div");
+            p.className = "particle";
+            p.style.left = Math.random() * 100 + "vw";
+            p.style.top = (Math.random() * 120 + 120) + "vh";
+            p.style.animationDuration = (10 + Math.random() * 10) + "s";
+            document.body.appendChild(p);
+        }
+    </script>
+
+    <header class="nav">
+        <div class="nav-logo">
+            <span class="logo-text">Astryx Network</span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="https://shop.astryxnet.xyz/" class="nav-item">Store</a>
+            <a href="https://discord.gg/fWscZn3Nvw" class="nav-item">Discord</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Astryx Network</h1>
+        <p>The Official Release Countdown</p>
+
+        <div class="release-countdown">
+            <h2>Releasing In</h2>
+            <div class="countdown-box">
+                <div>
+                    <span id="days">00</span>
+                    <label>Days</label>
+                </div>
+                <div>
+                    <span id="hours">00</span>
+                    <label>Hours</label>
+                </div>
+                <div>
+                    <span id="mins">00</span>
+                    <label>Minutes</label>
+                </div>
+                <div>
+                    <span id="secs">00</span>
+                    <label>Seconds</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <div class="btn" id="copy-ip-btn">Copy IP</div>
+            <a class="btn" href="https://discord.gg/fWscZn3Nvw" target="_blank">Join Discord</a>
+        </div>
+
+    </section>
+
+    <script>
+        const layer1 = document.querySelector(".bg1");
+        const layer2 = document.querySelector(".bg2");
+
+        document.addEventListener("mousemove", e => {
+            let x = (e.clientX / window.innerWidth - 0.5) * 20;
+            let y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            layer1.style.transform = `translate(${x}px,${y}px)`;
+            layer2.style.transform = `translate(${x / 2}px,${y / 2}px)`;
+        });
+    </script>
+
+    <!-- COPY IP -->
+    <script>
+        const copyBtn = document.getElementById("copy-ip-btn");
+        const serverIP = "play.astryxn.xyz";
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(serverIP);
+
+            copyBtn.textContent = "Copied!";
+            copyBtn.style.borderColor = "#ff5ac8";
+
+            setTimeout(() => {
+                copyBtn.textContent = "Copy IP";
+                copyBtn.style.borderColor = "rgba(255,255,255,0.12)";
+            }, 1200);
+        });
+    </script>
+
+    <script>
+        const releaseDate = new Date("March 20, 2025 15:00:00").getTime();
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = releaseDate - now;
+
+            if (diff <= 0) {
+                document.querySelector(".release-countdown h2").textContent = "Astryx Is Now LIVE!";
+                document.querySelector(".countdown-box").style.display = "none";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+
+            document.getElementById("days").textContent = String(days).padStart(2, "0");
+            document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+            document.getElementById("mins").textContent = String(mins).padStart(2, "0");
+            document.getElementById("secs").textContent = String(secs).padStart(2, "0");
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+    </script>
+
+</body>
+
+</html>

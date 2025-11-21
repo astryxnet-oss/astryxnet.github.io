@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astryx Network</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            color: white;
+            overflow-x: hidden;
+
+            background: #0a060a;
+            position: relative;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: -3;
+            pointer-events: none;
+            opacity: 0.38;
+            transition: transform 0.1s linear;
+        }
+
+        .bg1 {
+            background-image: linear-gradient(220deg, #0d0d0d, #150815, #0d0d0d);
+        }
+
+        .bg2 {
+            background-image: url('https://www.google.com/imgres?q=cool%20pink%20moving%20background%20dark&imgurl=https%3A%2F%2Fmedia.istockphoto.com%2Fid%2F1199450931%2Fvideo%2F4k-abstract-particle-wave-bokeh-background-purple-pink-beautiful-glitter-loop.jpg%3Fs%3D640x640%26k%3D20%26c%3D1M1VX-7pLcyDdBGbtmHIl9xvM9T4H7G1YASlJmuRBbU%3D&imgrefurl=https%3A%2F%2Fwww.istockphoto.com%2Fvideos%2Fpurple-and-pink-background&docid=p77dXaxFMy_kiM&tbnid=0PKKwiKvIfRYaM&vet=12ahUKEwiZxY7K9YGRAxUvIEQIHfm4GJ0QM3oECCIQAA..i&w=768&h=432&hcb=2&ved=2ahUKEwiZxY7K9YGRAxUvIEQIHfm4GJ0QM3oECCIQAA');
+            opacity: 0.14;
+            mix-blend-mode: overlay;
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ff5ac8;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 12s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-200vh) translateX(40vw);
+            }
+        }
+
+        .nav {
+            width: 100%;
+            height: 60px;
+            padding: 0 55px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: .5px;
+
+            background: linear-gradient(90deg, #ff5ac8, #ff9bdc, #ffffff, #ff9bdc, #ff5ac8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-size: 300% 300%;
+            animation: logoFadePingpong 6s ease-in-out infinite;
+        }
+
+        @keyframes logoFadePingpong {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+        }
+
+        .nav-item {
+            position: relative;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 17px;
+            transition: 0.25s ease;
+        }
+
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: #ff5ac8;
+            border-radius: 10px;
+            transition: width 0.25s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            color: #ff9bdc;
+        }
+
+        .nav-item.active {
+            color: #ff9bdc;
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+        }
+
+
+        .event-banner {
+            margin-top: 78px;
+            padding: 14px 25px;
+            width: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .event-icon {
+            font-size: 22px;
+            opacity: .85;
+        }
+
+        .event-status {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .event-banner[data-event-theme="main"] {
+            background: rgba(255, 90, 200, 0.1);
+            border-color: rgba(255, 90, 200, 0.28);
+        }
+
+        .event-banner[data-event-theme="main"] .event-status {
+            background: #ff5ac8;
+        }
+
+        .event-banner[data-event-theme="christmas"] {
+            background: rgba(255, 50, 50, 0.2);
+        }
+
+        .event-banner[data-event-theme="christmas"] .event-status {
+            background: #2ecc71;
+        }
+
+        .event-banner[data-event-theme="halloween"] {
+            background: rgba(255, 120, 30, 0.22);
+        }
+
+        .event-banner[data-event-theme="halloween"] .event-status {
+            background: #ff7a24;
+        }
+
+        .event-banner[data-event-theme="thanksgiving"] {
+            background: rgba(200, 120, 40, 0.20);
+        }
+
+        .event-banner[data-event-theme="thanksgiving"] .event-status {
+            background: #d07b2d;
+        }
+
+        .hero {
+            padding-top: 200px;
+            padding-bottom: 160px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 900;
+            color: #ff5ac8;
+            animation: fadeUp 1s ease;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 22px;
+            color: #d1d1d1;
+        }
+
+        .btn-row {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            /* makes both <div> and <a> behave the same */
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .25s;
+            color: #ffffff;
+        }
+
+        a.btn {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn:hover {
+            border-color: #ff5ac8;
+            transform: translateY(-3px);
+        }
+
+        .section {
+            padding: 90px 35px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 45px;
+            font-weight: 900;
+            color: #ff9bdc;
+            letter-spacing: .5px;
+        }
+
+        .divider {
+            width: 150px;
+            height: 4px;
+            background: #ff5ac8;
+            margin: 18px auto 50px;
+            border-radius: 5px;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 35px;
+        }
+
+        .why-card {
+            padding: 35px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: .25s;
+        }
+
+        .why-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: #ff5ac8;
+        }
+
+        .why-card h3 {
+            font-size: 26px;
+            color: #ff9bdc;
+            margin-bottom: 12px;
+        }
+
+        .why-card p {
+            font-size: 16px;
+            color: #c4c4c4;
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 130px;
+            padding: 50px 0;
+            text-align: center;
+            color: #c4c4c4;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-layer bg1"></div>
+    <div class="bg-layer bg2"></div>
+
+    <script>
+        for (let i = 0; i < 25; i++) {
+            let p = document.createElement("div");
+            p.className = "particle";
+            p.style.left = Math.random() * 100 + "vw";
+            p.style.top = (Math.random() * 120 + 120) + "vh";
+            p.style.animationDuration = (10 + Math.random() * 10) + "s";
+            document.body.appendChild(p);
+        }
+    </script>
+
+    <div class="event-banner" data-visible="flase" data-event-theme="main"
+        data-text="Astrixx Seasonal Pink Event Is LIVE!">
+
+        <span class="event-icon">⭐</span>
+        <span class="event-title"></span>
+        <span class="event-status"></span>
+
+    </div>
+
+    <header class="nav">
+        <div class="nav-logo">
+            <span class="logo-text">Astryx Network</span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="https://shop.astryxnet.xyz/" class="nav-item">Store</a>
+            <a href="https://discord.gg/fWscZn3Nvw" class="nav-item">Discord</a>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+        <h1>Astryx Network</h1>
+        <p>Custom SkyGen • Grindy • Smooth Gameplay</p>
+
+        <div class="btn-row">
+            <div class="btn" id="copy-ip-btn">Copy IP</div>
+            <a class="btn" href="https://discord.gg/fWscZn3Nvw" target="_blank">Join Discord</a>
+        </div>
+    </section>
+
+    <script>
+        const banner = document.querySelector(".event-banner");
+        banner.style.display = banner.dataset.visible === "true" ? "flex" : "none";
+        banner.querySelector(".event-title").textContent = banner.dataset.text;
+        banner.querySelector(".event-status").textContent =
+            banner.dataset.status.charAt(0).toUpperCase() + banner.dataset.status.slice(1);
+
+        const layer1 = document.querySelector(".bg1");
+        const layer2 = document.querySelector(".bg2");
+
+        document.addEventListener("mousemove", e => {
+            let x = (e.clientX / window.innerWidth - 0.5) * 20;
+            let y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            layer1.style.transform = `translate(${x}px,${y}px)`;
+            layer2.style.transform = `translate(${x / 2}px,${y / 2}px)`;
+        });
+    </script>
+
+    <script>
+
+        const copyBtn = document.getElementById("copy-ip-btn");
+        const serverIP = "play.astryxn.xyz:12345";
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(serverIP);
+
+            copyBtn.textContent = "Copied!";
+            copyBtn.style.borderColor = "#ff5ac8";
+
+            setTimeout(() => {
+                copyBtn.textContent = "Copy IP";
+                copyBtn.style.borderColor = "rgba(255,255,255,0.12)";
+            }, 1200);
+        });
+    </script>
+
+
+</body>
+
+</html>
